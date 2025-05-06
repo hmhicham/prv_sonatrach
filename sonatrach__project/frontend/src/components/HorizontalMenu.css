@@ -1,0 +1,63 @@
+.horizontal-menu {
+    background-color: #ffffff;
+    border-bottom: 2px solid #f28c38;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .menu-item {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    padding: 10px;
+    background: none; /* Ensures no background on button */
+    border: none; /* Removes default button border */
+    cursor: pointer; /* Consistent clickable feel */
+    font-size: 16px; /* Explicit font size for consistency */
+    line-height: 1; /* Matches Link line height */
+    display: inline-block; /* Ensures consistent layout */
+    font-family: Arial, sans-serif; /* Matches typical Link font */
+  }
+  
+  .menu-item:hover {
+    background-color: #e0f2e9;
+    border-radius: 5px;
+  }
+  
+  /* Dropdown styles */
+  .dropdownn {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 5px;
+    border: 1px solid #006633;
+  }
+  
+  .dropdown-content .dropdown-itemm {
+    text-decoration: none;
+    color: #006633;
+    padding: 10px 15px;
+    display: block;
+    font-weight: bold;
+    font-size: 16px; /* Matches menu-item */
+    font-family: Arial, sans-serif; /* Consistent font */
+  }
+  
+  .dropdown-content .dropdown-itemm:hover {
+    background-color: #e0f2e9;
+  }
+  
+  /* Show dropdown on hover */
+  .dropdownn:hover .dropdown-content {
+    display: block;
+  }

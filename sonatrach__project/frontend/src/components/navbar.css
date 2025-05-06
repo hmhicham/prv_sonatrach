@@ -1,0 +1,137 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f28c38; /* Sonatrach green (approximation) */
+    color: white;
+    padding: 10px 20px;
+  }
+  
+  .logo h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  /* .notifications {
+    font-size: 16px;
+  } */
+
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    column-gap: 4px;
+  }
+
+  .notifications,
+  .profile {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .notification-dropdown,
+  .profile-dropdown {
+    position: absolute;
+    right: 0;
+    background-color: #090909;
+    border: 1px solid #221d1d;
+    padding: 10px 0;
+    z-index: 1;
+    display: none;
+  }
+  .notifications:hover .notification-dropdown,
+  .profile:hover .profile-dropdown {
+    display: block;
+  }
+  .notification-item,
+  .profile-item {
+    padding: 10px;
+    color: white;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .dashboard-button {
+    background-color: white;
+    color: #f28c38;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-right: 10px;
+  }
+  
+  .dashboard-button:hover {
+    background-color: #ffe0c1;
+  }
+  
+  
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+    color: white;
+  }
+  
+  .icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .user-avatar {
+    /* width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background-color: white;
+    color: #f28c38;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 8px 8px;
+    font-size: 16px; */
+    width: 32px;
+    height: 32px;
+    background-color: #8b5cf6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+  
+  .icon-wrapper {
+    position: relative;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: #090909;
+    border: 1px solid #333;
+    border-radius: 6px;
+    min-width: 200px;
+    z-index: 10;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dropdown-item {
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #1a1a1a;
+  }
+  

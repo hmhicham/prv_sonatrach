@@ -1,0 +1,260 @@
+.dashboard-container {
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  /* Header */
+  /* .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: #111827;
+    color: white;
+  } */
+  
+  /* .header-left {
+    display: flex;
+    align-items: center;
+  } */
+  
+  .logo-placeholder {
+    width: 32px;
+    height: 32px;
+    background-color: #f97316;
+    border-radius: 8px;
+    margin-right: 12px;
+  }
+  
+  /* .header-left h1 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  } */
+  
+  .icon-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  
+  .icon-button:hover {
+    color: #d1d5db;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* .user-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #8b5cf6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  } */
+  
+  /* Main Content */
+  .main-content {
+    display: flex;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 256px;
+    background-color: #111827;
+    color: white;
+    padding: 16px;
+    max-width: 100vh;
+    width: auto;
+  }
+  
+  .sidebar h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+  }
+  
+  .sidebar-nav a:hover {
+    background-color: #374151;
+  }
+  
+  .sidebar-nav a.active {
+    background-color: #374151;
+  }
+  
+  .sidebar-nav .icon {
+    font-size: 20px;
+  }
+  
+  /* Dashboard Content */
+  .dashboard-content {
+    flex: 1;
+    padding: 32px;
+    
+  }
+  
+  .dashboard-content h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 32px;
+  }
+  
+  /* Key Metrics Cards */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  
+  .metric-card {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .metric-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .metric-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin-top: 8px;
+  }
+  
+  .metric-subtext {
+    font-size: 14px;
+    color: #6b7280;
+  }
+  
+  /* Charts Section */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+    width: 20%;
+  }
+  
+  /* .charts-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 24px;
+    margin-bottom: 32px;
+  } */
+
+  .charts-layout {
+    display: grid;
+    grid-template-columns: 1fr; /* First row full width */
+    gap: 24px;
+    margin-bottom: 32px;
+    /* width: 100px; */
+
+  }
+  
+  .charts-layout .row {
+    display: flex;
+    gap: 24px;
+    /* width: 50px; */
+  }
+  
+  .charts-layout .row > .chart-card {
+    flex: 1;
+  }
+  
+  
+  .full-width {
+    grid-column: 1 / -1;
+  }
+  
+  .chart-card {
+    background-color: white;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    
+  }
+  
+  .chart-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 16px;
+  }
+  
+  .chart-container {
+    height: 256px;
+  }
+  
+  .chart-container.pie-chart {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .chart-total {
+    text-align: center;
+    color: #6b7280;
+    margin-top: 8px;
+  }
+  
+  .chart-subtext {
+    color: #6b7280;
+    margin-top: 16px;
+  }
+  
+  /* Bottom Cards */
+  .bottom-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+  
+  .bottom-card {
+    background-color: #eff6ff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .bottom-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #374151;
+  }
+  
+  .bottom-card p {
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 8px;
+  }

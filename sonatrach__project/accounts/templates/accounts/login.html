@@ -1,0 +1,91 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonatrach Login</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% if user.is_authenticated %}
+    <script>
+        // Redirect authenticated users to the frontend home
+        window.location.href = "http://localhost:3000/";
+    </script>
+    {% endif %}
+</head>
+<body>
+    <div class="login-container">
+        <img src="{% static 'images/f1.png' %}" alt="Sonatrach Logo" class="logo">
+        <h2>Login</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="{{ form.username.id_for_label }}">Username</label>
+                {{ form.username }}
+            </div>
+            <div class="input-group">
+                <label for="{{ form.password.id_for_label }}">Password</label>
+                {{ form.password }}
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <p>Not registered? <a href="{% url 'accounts:register' %}">Register here</a></p>
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonatrach Login</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% if user.is_authenticated %}
+    <script>
+        // Redirect authenticated users to the frontend home
+        window.location.href = "http://127.0.0.1:8000/";
+    </script>
+    {% endif %}
+</head>
+<body>
+    <div class="login-container">
+        <img src="{% static 'images/f1.png' %}" alt="Sonatrach Logo" class="logo">
+        <h2>Login</h2>
+        {% if user.is_authenticated %}
+            <p class="success">You are already logged in as {{ user.username }}.</p>
+            <p><a href="http://127.0.0.1:8000/">Go to Home</a></p>
+        {% else %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                </div>
+                <div class="input-group">
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    {{ form.password }}
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <p>Not registered? <a href="{% url 'accounts:register' %}">Register here</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>
