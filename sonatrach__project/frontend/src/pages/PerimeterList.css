@@ -222,7 +222,8 @@
     z-index: 1000;
   }
   
-  .modal-content {
+  .modal-contentt {
+    /* height: 100%; */
     background-color: white;
     border-radius: 16px;
     padding: 32px;
@@ -258,7 +259,7 @@
   }
   
   .modal-form .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 13px;
   }
   
   .modal-form .form-group label {

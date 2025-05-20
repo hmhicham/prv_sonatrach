@@ -1,0 +1,146 @@
+.dashboard {
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Sidebar */
+.dashboard__main {
+  display: flex;
+}
+
+.dashboard__sidebar {
+  width: 256px;
+  background-color: #111827;
+  color: white;
+  padding: 16px;
+  max-width: 100vh;
+  width: auto;
+}
+
+.sidebar__title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar__link:hover {
+  background-color: #374151;
+}
+
+.sidebar__link.active {
+  background-color: #374151;
+}
+
+.sidebar__icon {
+  font-size: 20px;
+}
+
+/* Dashboard Content */
+.dashboard__content {
+  flex: 1;
+  padding: 32px;
+}
+
+.content__title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 32px;
+}
+
+/* Metrics */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.metric {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.metric__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.metric__value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-top: 8px;
+}
+
+.metric__subtext {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Charts */
+.charts {
+  display: grid;
+  gap: 24px;
+}
+
+.charts__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.chart__card {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex: 1;
+}
+
+.chart__card.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.chart__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 16px;
+}
+
+.chart__container {
+  height: 256px;
+}
+
+.chart__container.pie {
+  display: flex;
+  justify-content: center;
+}
+
+.chart__total {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 8px;
+}

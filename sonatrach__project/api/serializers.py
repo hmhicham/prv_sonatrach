@@ -135,7 +135,7 @@
 from rest_framework import serializers
 from django.contrib.gis.geos import Polygon, Point, LineString
 import base64
-from accounts.models import Demande, Concession, Contract, Phase, Seismic, Well, GgStudies, Fracturation, Commitement, Bloc, Departement
+from accounts.models import Demande, Concession, Contract, Phase, Seismic, Well, GgStudies, Fracturation, Commitement, Bloc, Departement, SeisMonthlyPrevisions,DrillMonthlyPrevisions
 
 
     #for the map
@@ -243,10 +243,14 @@ class ConcessionSerializer(serializers.ModelSerializer):
     dept = serializers.PrimaryKeyRelatedField(queryset=Departement.objects.all(), allow_null=True)
     linked_prms = serializers.PrimaryKeyRelatedField(queryset=Concession.objects.all(), many=True, required=False)
 
+    # def update(self, instance, validated_data):
+    #     print(f"Validated data for update: {validated_data}")
+    #     return super().update(instance, validated_data)
+
     class Meta:
         model = Concession
-        fields = ['name', 'validity', 'blocs', 'department', 'status', 'linkedPerimeters', 'observation', 'positions', 'positions_display', 'dept', 'linked_prms']
-        read_only_fields = ['positions_display']
+        fields = ['name', 'validity', 'blocs', 'department', 'status', 'linkedPerimeters', 'observation', 'positions', 'positions_display', 'dept', 'linked_prms','notes']
+        read_only_fields = ['name','positions_display']
 
     def create(self, validated_data):
         print('Validated data in create:', validated_data)
@@ -356,6 +360,58 @@ class EngagementDetailSerializer(serializers.Serializer):
     effectif = serializers.FloatField()
     resteRealiser = serializers.FloatField()
 
+# class DemandeSerializer(serializers.ModelSerializer):
+#     numeroDemande = serializers.CharField(source='num')
+#     dateDemande = serializers.DateField(source='date_envoi')
+#     type = serializers.CharField()
+#     has_ts = serializers.BooleanField()
+#     demande = serializers.SerializerMethodField()
+#     dateReponse = serializers.DateField(source='date_resp', allow_null=True)
+#     # accordee = serializers.SerializerMethodField()
+#     accord = serializers.BooleanField()
+#     dem_filename = serializers.CharField()
+#     document_dem = serializers.CharField(write_only=True)  # Accept as base64 string
+#     reponse = serializers.CharField(source='resp_num', allow_null=True)
+#     motif = serializers.CharField()
+#     phase = serializers.PrimaryKeyRelatedField(queryset=Phase.objects.all(), allow_null=True, required=False)
+#     resp_filename = serializers.CharField(allow_null=True)
+#     document_resp = serializers.CharField(write_only=True)
+#     ctr = serializers.PrimaryKeyRelatedField(queryset=Contract.objects.all(), required=True)
+    
+
+#     class Meta:
+#         model = Demande
+#         fields = ['numeroDemande', 'type', 'has_ts', 'accord', 'dateDemande', 'dem_filename', 'document_dem',
+#             'demande', 'dateReponse', 'reponse', 'motif', 'phase', 'resp_filename', 'document_resp', 'ctr']
+#         read_only_fields = ['accord', 'has_ts']
+
+#     def create(self, validated_data):
+#         # Decode base64 to binary for document_dem
+#         document_dem_b64 = validated_data.pop('document_dem')
+#         validated_data['document_dem'] = base64.b64decode(document_dem_b64)
+#          # Decode base64 to binary for document_resp, if present
+#         document_resp_b64 = validated_data.pop('document_resp', None)
+#         if document_resp_b64:
+#             validated_data['document_resp'] = base64.b64decode(document_resp_b64)
+#         else:
+#             validated_data['document_resp'] = None
+
+#         return super().create(validated_data)
+
+#     def get_demande(self, obj):
+#         return "Oui" if obj.has_ts else "Non"
+
+#     def get_accordee(self, obj):
+#         return "Oui" if obj.accord else "Non"
+
+#     def validate(self, data):
+#         if data.get('motif') == 'ACP' and not data.get('phase'):
+#             raise serializers.ValidationError("The 'phase' field is required when motif is 'ACP'.")
+#         return data
+
+
+
+
 class DemandeSerializer(serializers.ModelSerializer):
     numeroDemande = serializers.CharField(source='num')
     dateDemande = serializers.DateField(source='date_envoi')
@@ -366,27 +422,31 @@ class DemandeSerializer(serializers.ModelSerializer):
     # accordee = serializers.SerializerMethodField()
     accord = serializers.BooleanField()
     dem_filename = serializers.CharField()
-    document_dem = serializers.CharField(write_only=True)  # Accept as base64 string
+    document_dem = serializers.SerializerMethodField()  # Read as base64  # Accept as base64 string
     reponse = serializers.CharField(source='resp_num', allow_null=True)
     motif = serializers.CharField()
     phase = serializers.PrimaryKeyRelatedField(queryset=Phase.objects.all(), allow_null=True, required=False)
     resp_filename = serializers.CharField(allow_null=True)
-    document_resp = serializers.CharField(write_only=True)
+    document_resp = serializers.SerializerMethodField()
     ctr = serializers.PrimaryKeyRelatedField(queryset=Contract.objects.all(), required=True)
-    
+    document_dem_input = serializers.CharField(write_only=True)  # Accept base64 input
+    document_resp_input = serializers.CharField(write_only=True, allow_null=True)  # Accept base64 input
 
     class Meta:
         model = Demande
         fields = ['numeroDemande', 'type', 'has_ts', 'accord', 'dateDemande', 'dem_filename', 'document_dem',
-            'demande', 'dateReponse', 'reponse', 'motif', 'phase', 'resp_filename', 'document_resp', 'ctr']
+            'demande', 'dateReponse', 'reponse', 'motif', 'phase', 'resp_filename', 'document_resp', 'ctr', 'document_dem_input', 'document_resp_input']
         read_only_fields = ['accord', 'has_ts']
 
     def create(self, validated_data):
-        # Decode base64 to binary for document_dem
-        document_dem_b64 = validated_data.pop('document_dem')
-        validated_data['document_dem'] = base64.b64decode(document_dem_b64)
-         # Decode base64 to binary for document_resp, if present
-        document_resp_b64 = validated_data.pop('document_resp', None)
+        # Extract and decode base64 inputs
+        document_dem_b64 = validated_data.pop('document_dem_input', None)
+        if document_dem_b64:
+            validated_data['document_dem'] = base64.b64decode(document_dem_b64)
+        else:
+            validated_data['document_dem'] = None
+
+        document_resp_b64 = validated_data.pop('document_resp_input', None)
         if document_resp_b64:
             validated_data['document_resp'] = base64.b64decode(document_resp_b64)
         else:
@@ -396,6 +456,16 @@ class DemandeSerializer(serializers.ModelSerializer):
 
     def get_demande(self, obj):
         return "Oui" if obj.has_ts else "Non"
+
+    def get_document_dem(self, obj):
+        if obj.document_dem:
+            return base64.b64encode(obj.document_dem).decode('utf-8')
+        return None
+
+    def get_document_resp(self, obj):
+        if obj.document_resp:
+            return base64.b64encode(obj.document_resp).decode('utf-8')
+        return None
 
     def get_accordee(self, obj):
         return "Oui" if obj.accord else "Non"
@@ -466,7 +536,7 @@ class SeismicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Seismic
-        fields = ['nomEtude', 'type', 'positions', 'positions_display','prm', 'name','start_date','end_date','company','cost','kilometrage']
+        fields = ['nomEtude', 'type', 'positions', 'positions_display','prm', 'name','start_date','end_date','company','cost','kilometrage','activity']
         read_only_fields = ['positions_display']
 
     def create(self, validated_data):
@@ -660,3 +730,134 @@ class FracturationSerializer(serializers.ModelSerializer):
         return None
 
 
+class DepartementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Departement
+        fields = ['id', 'asset']  # Adjust fields as needed
+
+
+# planning sismique
+# class SeisMonthlyPrevisionsSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = SeisMonthlyPrevisions
+#         fields = ['sisProg', 'month', 'year', 'pv', 'meq', 'kilometrage_prev', 'cost_sci', 'cost_ci']
+
+#     def to_representation(self, instance):
+#         # Transform model data to match frontend structure
+#         month_map = {
+#             1: 'Jan', 2: 'Fev', 3: 'Mar', 4: 'Avr', 5: 'Mai', 6: 'Juin',
+#             7: 'Juil', 8: 'Aout', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec'
+#         }
+#         data = {
+#             'm-eq': {},
+#             'Kilometrage': {},
+#             'PV': {},
+#             'KDA SCI': {},
+#             'KDA avec CI': {}
+#         }
+#         for month_num in range(1, 13):
+#             month_name = month_map[month_num]
+#             data['m-eq'][month_name] = instance.meq if instance.month == month_num else 0
+#             data['Kilometrage'][month_name] = instance.kilometrage_prev if instance.month == month_num else 0
+#             data['PV'][month_name] = instance.pv if instance.month == month_num else 0
+#             data['KDA SCI'][month_name] = instance.cost_sci if instance.month == month_num else 0
+#             data['KDA avec CI'][month_name] = instance.cost_ci if instance.month == month_num else 0
+#         return data
+
+#     def create(self, validated_data):
+#         # Handle bulk creation for all months
+#         sisProg = validated_data['sisProg']
+#         year = validated_data['year']
+#         month = validated_data['month']
+#         data = self.context['request'].data.get('data', {})
+#         month_map = {'Jan': 1, 'Fev': 2, 'Mar': 3, 'Avr': 4, 'Mai': 5, 'Juin': 6,
+#                      'Juil': 7, 'Aout': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
+
+#         # Delete existing forecasts for this project and year
+#         SeisMonthlyPrevisions.objects.filter(sisProg=sisProg, year=year).delete()
+
+#         # Create or update records for each month
+#         for month_name, month_num in month_map.items():
+#             forecast_data = {
+#                 'sisProg': sisProg,
+#                 'month': month_num,
+#                 'year': year,
+#                 'pv': data.get('PV', {}).get(month_name, 0),
+#                 'meq': data.get('m-eq', {}).get(month_name, 0),
+#                 'kilometrage_prev': data.get('Kilometrage', {}).get(month_name, 0),
+#                 'cost_sci': data.get('KDA SCI', {}).get(month_name, 0),
+#                 'cost_ci': data.get('KDA avec CI', {}).get(month_name, 0),
+#             }
+#             serializer = SeisMonthlyPrevisionsSerializer(data=forecast_data)
+#             if serializer.is_valid():
+#                 serializer.save()
+#             else:
+#                 raise serializers.ValidationError(serializer.errors)
+
+#         return SeisMonthlyPrevisions.objects.get(sisProg=sisProg, month=month, year=year)
+
+
+# planning sismique
+class SeisMonthlyPrevisionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SeisMonthlyPrevisions
+        fields = ['sisProg', 'month', 'year', 'pv', 'meq', 'kilometrage_prev', 'cost_sci', 'cost_ci']
+
+    def validate(self, attrs):
+        return attrs  # Bypass uniqueness validation (though not critical since view handles saving)
+
+    def to_representation(self, instance):
+        month_map = {
+            1: 'Jan', 2: 'Fev', 3: 'Mar', 4: 'Avr', 5: 'Mai', 6: 'Juin',
+            7: 'Juil', 8: 'Aout', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec'
+        }
+        data = {
+            'm-eq': {},
+            'Kilometrage': {},
+            'PV': {},
+            'KDA SCI': {},
+            'KDA avec CI': {}
+        }
+        for month_num in range(1, 13):
+            month_name = month_map[month_num]
+            forecast = SeisMonthlyPrevisions.objects.filter(sisProg=instance.sisProg, year=instance.year, month=month_num).first()
+            data['m-eq'][month_name] = forecast.meq if forecast else 0
+            data['Kilometrage'][month_name] = forecast.kilometrage_prev if forecast else 0
+            data['PV'][month_name] = forecast.pv if forecast else 0
+            data['KDA SCI'][month_name] = forecast.cost_sci if forecast else 0
+            data['KDA avec CI'][month_name] = forecast.cost_ci if forecast else 0
+        return data
+
+
+
+# planning forage
+# accounts/serializers.py
+from rest_framework import serializers
+from accounts.models import DrillMonthlyPrevisions, Well
+
+class DrillMonthlyPrevisionsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DrillMonthlyPrevisions
+        fields = ['wellProg', 'month', 'year', 'metrage', 'mapp', 'cost']
+
+    def to_representation(self, instance):
+        month_map = {
+            1: 'Jan', 2: 'Fév', 3: 'Mar', 4: 'Avr', 5: 'Mai', 6: 'Juin',
+            7: 'Juil', 8: 'Août', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Déc'
+        }
+        data = {
+            'metrage': {},
+            'M-app': {},
+            'MDA': {}
+        }
+        for month_num in range(1, 13):
+            month_name = month_map[month_num]
+            forecast = DrillMonthlyPrevisions.objects.filter(
+                wellProg=instance.wellProg,
+                year=instance.year,
+                month=month_num
+            ).first()
+            data['metrage'][month_name] = forecast.metrage if forecast else 0
+            data['M-app'][month_name] = forecast.mapp if forecast else 0
+            data['MDA'][month_name] = forecast.cost if forecast else 0
+        return data

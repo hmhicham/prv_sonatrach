@@ -2,7 +2,24 @@ import React from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 import { IoBarChartOutline, IoPieChartOutline, IoTrendingUpOutline, IoPulseOutline, IoHomeOutline } from 'react-icons/io5';
-import './Dashboard.css';
+// Import CSS module with error handling
+let styles = {};
+try {
+  styles = require('./Dashboard.module.css');
+  console.log('CSS Module loaded successfully:', styles);
+} catch (error) {
+  console.error('Failed to load CSS module:', error);
+  // Fallback styles if CSS module fails to load
+  styles = {
+    dashboard: 'dashboard',
+    dashboard__main: 'dashboard__main',
+    dashboard__sidebar: 'dashboard__sidebar',
+    sidebar__title: 'sidebar__title',
+    sidebar__nav: 'sidebar__nav',
+    sidebar__link: 'sidebar__link',
+    active: 'active',
+  };
+}
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
@@ -190,102 +207,85 @@ function Dashboard() {
       },
     },
   };
-
+  
   return (
-    <div className="dashboard-container">
-      {/* Header */}
-      
-
-      {/* Main Content */}
-      <div className="main-content">
-        {/* Sidebar */}
-        <div className="sidebar">
-          <h2>Porte feuille de l’Activité 2025</h2>
-          <nav className="sidebar-nav">
-          <a href="#" className="active">
-              <IoBarChartOutline className="sidebar-icon" />
+   
+    <div className={styles.dashboard}>
+      <div className={styles.dashboard__main}>
+        <div className={styles.dashboard__sidebar}>
+          <h2 className={styles.sidebar__title}>Porte feuille de l’Activité 2025</h2>
+          <nav className={styles.sidebar__nav}>
+            <a href="#" className={`${styles.sidebar__link} ${styles.active}`}>
+              <IoBarChartOutline className={styles.sidebar__icon} />
               <span>Portefeuille Exploration</span>
             </a>
-            <a href="#">
-              <IoPieChartOutline className="sidebar-icon" />
+            <a href="#" className={styles.sidebar__link}>
+              <IoPieChartOutline className={styles.sidebar__icon} />
               <span>Synthèse des travaux</span>
             </a>
-            <a href="#">
-              <IoTrendingUpOutline className ="sidebar-icon" />
+            <a href="#" className={styles.sidebar__link}>
+              <IoTrendingUpOutline className={styles.sidebar__icon} />
               <span>Activité forage Exploration</span>
             </a>
-            <a href="#">
-              <IoPulseOutline className="sidebar-icon" />
+            <a href="#" className={styles.sidebar__link}>
+              <IoPulseOutline className={styles.sidebar__icon} />
               <span>Activité Sismique</span>
             </a>
-            <a href="#">
-              <IoHomeOutline className="sidebar-icon" />
+            <a href="#" className={styles.sidebar__link}>
+              <IoHomeOutline className={styles.sidebar__icon} />
               <span>Retour à la page d’accueil</span>
             </a>
           </nav>
         </div>
 
-        {/* Dashboard Content */}
-        <div className="dashboard-content">
-          <h1>Tableau de bord</h1>
+        <div className={styles.dashboard__content}>
+          <h1 className={styles.content__title}>Tableau de bord</h1>
 
-          {/* Key Metrics Cards */}
-          <div className="metrics-grid">
-            <div className="metric-card">
-              <h3>Nombre de Découvertes</h3>
-              <p className="metric-value">17</p>
-              <p className="metric-subtext">dont 0 en Association</p>
+          <div className={styles.metrics}>
+            <div className={styles.metric}>
+              <h3 className={styles.metric__title}>Nombre de Découvertes</h3>
+              <p className={styles.metric__value}>17</p>
+              <p className={styles.metric__subtext}>dont 0 en Association</p>
             </div>
-            <div className="metric-card">
-              <h3>Apport des délinéations</h3>
-              <p className="metric-value">98,71</p>
+            <div className={styles.metric}>
+              <h3 className={styles.metric__title}>Apport des délinéations</h3>
+              <p className={styles.metric__value}>98,71</p>
             </div>
-            <div className="metric-card">
-              <h3>Volume 2P MTEP</h3>
-              <p className="metric-value">52,94</p>
+            <div className={styles.metric}>
+              <h3 className={styles.metric__title}>Volume 2P MTEP</h3>
+              <p className={styles.metric__value}>52,94</p>
             </div>
-            <div className="metric-card">
-              <h3>Volume 3P MTEP</h3>
-              <p className="metric-value">26.29</p>
+            <div className={styles.metric}>
+              <h3 className={styles.metric__title}>Volume 3P MTEP</h3>
+              <p className={styles.metric__value}>26.29</p>
             </div>
           </div>
 
-          {/* Charts Section */}
-          <div className="charts-layout">
-            {/* Bar Chart: Répartition des périmètres par Bassin */}
-            <div className="chart-card full-width">
-              <h3>Répartition des périmètres par Bassin</h3>
-              <div className="chart-container">
+          <div className={styles.charts}>
+            <div className={`${styles.chart__card} ${styles.fullWidth}`}>
+              <h3 className={styles.chart__title}>Répartition des périmètres par Bassin</h3>
+              <div className={styles.chart__container}>
                 <Bar data={barChartData} options={barChartOptions} />
               </div>
             </div>
 
-            {/* Pie Chart: Répartition des périmètres par Asset */}
-            <div className="row">
-            <div className="chart-card">
-              <h3>Répartition des périmètres par Asset</h3>
-              <div className="chart-container pie-chart">
-                <Pie data={pieChartAssetData} options={pieChartAssetOptions} />
+            <div className={styles.charts__row}>
+              <div className={styles.chart__card}>
+                <h3 className={styles.chart__title}>Répartition des périmètres par Asset</h3>
+                <div className={`${styles.chart__container} ${styles.pie}`}>
+                  <Pie data={pieChartAssetData} options={pieChartAssetOptions} />
+                </div>
+                <p className={styles.chart__total}>Total portefeuille 49</p>
               </div>
-              <p className="chart-total">Total portefeuille 49</p>
-            </div>
-
-            {/* Pie Chart: Répartition des périmètres par Catégorie */}
-            <div className="chart-card">
-              <h3>Répartition des périmètres par Catégorie</h3>
-              <div className="chart-container pie-chart">
-                <Pie data={pieChartCategoryData} options={pieChartCategoryOptions} />
+              <div className={styles.chart__card}>
+                <h3 className={styles.chart__title}>Répartition des périmètres par Catégorie</h3>
+                <div className={`${styles.chart__container} ${styles.pie}`}>
+                  <Pie data={pieChartCategoryData} options={pieChartCategoryOptions} />
+                </div>
+                <p className={styles.chart__total}>Total portefeuille 49</p>
               </div>
-              <p className="chart-total">Total portefeuille 49</p>
-            </div>
             </div>
           </div>
-
-          {/* Bar Chart: Contrats dont l’engagement n’est pas honoré par Bassin */}
-          
-
-          {/* Bottom Cards */}
-          
         </div>
       </div>
     </div>

@@ -670,4 +670,5 @@ class TransactionLog(models.Model):
     
     class Meta:
         db_table = 'transaction_log'
+        
 

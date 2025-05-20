@@ -139,7 +139,7 @@
   .table {
     min-width: 100%;
     background-color: white;
-    border: 1px solid #d1d5db;
+    /* border: 1px solid #d1d5db; */
     border-radius: 8px;
   }
   
@@ -251,6 +251,7 @@
     background-color: #004d29;
   }
   .add-contract-button {
+    margin-bottom: 20px;
     padding: 12px 20px;
     background-color: #006633;
     color: white;
@@ -369,12 +370,12 @@
 
 
 
-  .header-container {
-    display: flex;
+  /* .header-container { */
+    /* display: flex;
     flex-direction: column;
     gap: 16px;
-    margin-bottom: 24px;
-  }
+    margin-bottom: 24px; */
+  /* } */
   
   /* .header-left {
     display: flex;
@@ -391,6 +392,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
   }
   

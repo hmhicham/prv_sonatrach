@@ -30,9 +30,9 @@ function HorizontalMenu() {
       <div className="dropdownn">
       <button className="menu-item">Planning</button>
       <div className="dropdown-content">
-          <Link to="/planning" className="dropdown-itemm">Planing sismique mensuel</Link>
-          <Link to="/planning/sismique" className="dropdown-itemm">Planing Forage mensuel</Link>
-          <Link to="/planning/geologique" className="dropdown-itemm">PMT</Link>
+          <Link to="/planning/P_sismiques" className="dropdown-itemm">Planing sismique mensuel</Link>
+          <Link to="/planning/P_forage" className="dropdown-itemm">Planing Forage mensuel</Link>
+          <Link to="/planning/P_pmt" className="dropdown-itemm">PMT</Link>
       </div>
       </div>
       {/* <Link to="/planning" className="menu-item">Planning</Link> */}

@@ -101,7 +101,8 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="logo">
-        <h2>Sonatrach</h2>
+      {/* <img src="//logotyp.us/file/sonatrach.svg" alt="Sonatrach"/><a href="//logotyp.us/logo/sonatrach">Sonatrach logo</a> */}
+        <h2>Portefeuille Exploration</h2>
       </div>
 
       <div className="navbar-right">

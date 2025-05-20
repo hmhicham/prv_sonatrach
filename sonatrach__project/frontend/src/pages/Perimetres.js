@@ -707,6 +707,7 @@ function Perimetres() {
   };
 
   const handleAddPhase = async () => {
+    if (phases.length >= 3) return; // Limit to 3 phases
     const newPhaseName = `Phase ${phases.length + 1}`;
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/phases/`, {
@@ -794,7 +795,7 @@ function Perimetres() {
 
   return (
     <div className="perimetre-container">
-      <div className="stepper">
+      {/* <div className="stepper">
         <div className="step">
           <div className={`step-circle ${step >= 1 ? 'active' : ''}`}>1</div>
           <span className="step-label">Contract</span>
@@ -819,7 +820,33 @@ function Perimetres() {
           <div className={`step-circle ${step >= 5 ? 'active' : ''}`}>5</div>
           <span className="step-label">Réalisations</span>
         </div>
+      </div> */}
+
+<div className="stepper">
+  {[1, 2, 3, 4, 5].map((stepNumber) => (
+    <React.Fragment key={stepNumber}>
+      <div className="step">
+        <div 
+          className={`step-circle ${step === stepNumber ? 'active' : ''}`}
+          onClick={() => setStep(stepNumber)}
+          style={{ cursor: 'pointer' }}
+        >
+          {stepNumber}
+        </div>
+        <span className="step-label">
+          {stepNumber === 1 && 'Contract'}
+          {stepNumber === 2 && 'suivi Contractuel'}
+          {stepNumber === 3 && 'Engagements'}
+          {stepNumber === 4 && 'Requêtes'}
+          {stepNumber === 5 && 'Réalisations'}
+        </span>
       </div>
+      {stepNumber < 5 && (
+        <div className={`step-connector ${step > stepNumber ? 'active' : ''}`} />
+      )}
+    </React.Fragment>
+  ))}
+</div>
 
       <div className="content-container">
         {/* table t_contracts */}
@@ -920,9 +947,9 @@ function Perimetres() {
         {step === 2 && (
           <div>
             <h2>suivi Contractuel {perimetre}</h2>
-            <button onClick={handleAddPhase} className="add-button">
+            {/* <button onClick={handleAddPhase} className="add-button">
               Ajouter une phase
-            </button>
+            </button> */}
             <div className="table-container">
               <table className="table">
                 <thead>
@@ -994,9 +1021,9 @@ function Perimetres() {
                     </select>
                   </div>
                 </div>
-                <button onClick={handleAddPhase} className="add-buttonn">
+                {/* <button onClick={handleAddPhase} className="add-buttonn">
                   Ajouter une phase
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -1214,10 +1241,22 @@ function Perimetres() {
           </div>
         )}
 
-        <div className="navigation-buttons">
-          <button onClick={handleBack} disabled={step === 1}>Retour</button>
-          <button onClick={handleNext}>{step === 5 ? 'Terminer' : 'Suivant'}</button>
-        </div>
+<div className="navigation-buttons">
+  <button 
+    onClick={() => setStep(prev => Math.max(1, prev - 1))} 
+    disabled={step === 1}
+  >
+    Retour
+  </button>
+  {step < 5 && (
+    <button 
+      onClick={() => setStep(prev => Math.min(5, prev + 1))}
+      disabled={step === 5}
+    >
+      Suivant
+    </button>
+  )}
+</div>
       </div>
     </div>
   );

@@ -101,7 +101,15 @@ import Surfaces from '../pages/Surfaces';
 import Avenants from '../pages/Avenants';
 import PerimeterList from '../pages/PerimeterList';
 import Dashboard from '../pages/Dashboard';
-import Programmes from '../pages/Programmes';
+import ProgrammeSismique from '../pages/ProgrammeSismique';
+import ProgrammePuits from '../pages/ProgrammePuits';
+import ProgrammeEtudes from '../pages/ProgrammeEtudes';
+import ProgrammeFracturation from '../pages/ProgrammeFracturation';
+import PolygonDetails from '../pages/PolygonDetails';
+import AvenantForm from '../pages/AvenantForm';
+import PlanningSismique from '../pages/PlanningSismique';
+import PlanningForage from '../pages/PlanningForage';
+import PlanningPMT from '../pages/PlanningPMT';
 import './App.css';
 import 'leaflet/dist/leaflet.css';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
@@ -158,14 +166,23 @@ function App() {
       <Routes>
         <Route path="/" element={<Home username={username} isManager={isManager} />} />
         <Route path="/PerimetreList" element={<PerimeterList />} />
+        <Route path="/Avenants/new" element={<AvenantForm />} />
         <Route path="/Perimetres/:name" element={<Perimetres />} />
         <Route path="/Surfaces" element={<Surfaces />} />
         <Route path="/Avenants" element={<Avenants />} />
         <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/programs/P_sismiques" element={<Programmes initialTab="ASO" />} />
-        <Route path="/programs/P_puits" element={<Programmes initialTab="ASE" />} />
-        <Route path="/programs/P_Etude_GG" element={<Programmes initialTab="ASC" />} />
-        <Route path="/programs/P_F_Hydraulique" element={<Programmes initialTab="ASN" />} />
+        <Route path="/programs/P_sismiques" element={<ProgrammeSismique />} />
+        <Route path="/programs/P_puits" element={<ProgrammePuits />} />
+        <Route path="/programs/P_Etude_GG" element={<ProgrammeEtudes />} />
+        <Route path="/programs/P_F_Hydraulique" element={<ProgrammeFracturation />} />
+        {/* <Route path="/polygon/:id" element={<PolygonDetails />} /> */}
+        <Route path="/map/polygon-details/:id" element={<PolygonDetails />} />
+        <Route path="/planning/P_sismiques" element={<PlanningSismique />} />
+        <Route path="/planning/P_forage" element={<PlanningForage />} />
+        <Route path="/planning/P_pmt" element={<PlanningPMT />} />
+        {/* <Route path="/planning" element={<PlanningSismique />} /> */}
+
+        <Route path="/polygon-details/:id" element={<PolygonDetails />} />
       </Routes>
     </div>
   );
